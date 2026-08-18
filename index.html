@@ -1,1473 +1,1503 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Hadal Magdy — Digital Twin & Automation Engineer</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-:root {
-  --ink:       #0E0E10;
-  --ink2:      #181820;
-  --surface:   #1C1C26;
-  --surface2:  #222230;
-  --line:      #2A2A3A;
-  --line2:     #353548;
-  --gold:      #47e84a;
-  --gold2:     #287910;
-  --electric:  #4DFFB4;
-  --coral:     #FF6B6B;
-  --blue:      #5B8DEF;
-  --text:      #E8E8F0;
-  --text2:     #9090A8;
-  --muted:     #50506A;
-  --white:     #FFFFFF;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hadal Magdy — Computer Vision Engineer</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;600;700&family=JetBrains+Mono:wght@300;400;500&family=Nunito+Sans:wght@300;400;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #060b10;
+      --surface: #0a1420;
+      --card: #0e1a28;
+      --card-hover: #122030;
+      --border: #1a2f45;
+      --cyan: #00e5ff;
+      --cyan-dim: rgba(0, 229, 255, 0.12);
+      --cyan-glow: rgba(0, 229, 255, 0.35);
+      --orange: #ff7040;
+      --orange-dim: rgba(255, 112, 64, 0.12);
+      --green: #00ffa3;
+      --text: #d6e8f5;
+      --text-muted: #4d7a9e;
+      --text-dim: #2a4d68;
+      --font-display: 'Chakra Petch', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-body: 'Nunito Sans', sans-serif;
+    }
 
-* { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-body {
-  background: var(--ink);
-  color: var(--text);
-  font-family: 'Outfit', sans-serif;
-  overflow-x: hidden;
-}
+    html {
+      scroll-behavior: smooth;
+    }
 
-::-webkit-scrollbar { width:3px; }
-::-webkit-scrollbar-track { background: var(--ink); }
-::-webkit-scrollbar-thumb { background: var(--gold); }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
 
-body::after {
-  content:'';
-  position:fixed;
-  inset:0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events:none;
-  z-index:999;
-  opacity:0.4;
-}
+    /* ─── GRID BACKGROUND ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+      pointer-events: none;
+      z-index: 0;
+    }
 
-/* ══════════════ NAV ══════════════ */
-nav {
-  position: fixed;
-  top:0; left:0; right:0;
-  z-index: 500;
-  height: 68px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 72px;
-  background: rgba(14,14,16,0.85);
-  backdrop-filter: blur(24px);
-  border-bottom: 1px solid var(--line);
-}
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 60px;
+      background: rgba(6, 11, 16, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
 
-.logo {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  text-decoration: none;
-}
-.logo-name {
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
-  font-size: 22px;
-  color: var(--white);
-  letter-spacing: -0.02em;
-}
-.logo-dot {
-  width: 6px; height: 6px;
-  background: var(--gold);
-  border-radius: 50%;
-  margin-bottom: 2px;
-}
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--cyan);
+      letter-spacing: 2px;
+      text-decoration: none;
+    }
 
-.nav-links {
-  list-style: none;
-  display: flex;
-  gap: 32px;
-}
-.nav-links a {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text2);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-.nav-links a:hover { color: var(--gold); }
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
 
-.nav-hire {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink);
-  background: var(--gold);
-  padding: 9px 22px;
-  text-decoration: none;
-  font-weight: 500;
-  transition: background 0.2s, transform 0.15s;
-  border-radius: 2px;
-}
-.nav-hire:hover { background: #0b2a01; transform: translateY(-1px); }
+    .nav-links a {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
 
-/* ══════════════ HERO ══════════════ */
-#hero {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 120px 72px 80px;
-  position: relative;
-  overflow: hidden;
-}
+    .nav-links a:hover {
+      color: var(--cyan);
+    }
 
-.hero-bg-circle {
-  position:absolute;
-  border-radius: 50%;
-  pointer-events:none;
-}
-.hero-bg-circle.c1 {
-  width: 600px; height: 600px;
-  right: -120px; top: -80px;
-  background: radial-gradient(circle, rgba(232,197,71,0.06) 0%, transparent 70%);
-}
-.hero-bg-circle.c2 {
-  width: 400px; height: 400px;
-  left: 30%; bottom: -100px;
-  background: radial-gradient(circle, rgba(77,255,180,0.04) 0%, transparent 70%);
-}
+    /* ─── HERO ─── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 120px 60px 80px;
+      overflow: hidden;
+    }
 
-.hero-eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 32px;
-}
-.hero-eyebrow-line { width: 40px; height: 1px; background: var(--gold); }
-.hero-eyebrow-text {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--gold);
-}
+    .hero-scan {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+      animation: scan 4s linear infinite;
+      opacity: 0.6;
+    }
 
-.hero-headline { max-width: 900px; margin-bottom: 10px; }
-.hero-headline h1 {
-  font-family: 'Instrument Serif', serif;
-  font-size: clamp(58px, 7.5vw, 110px);
-  font-weight: 400;
-  line-height: 0.92;
-  letter-spacing: -0.03em;
-  color: var(--white);
-}
-.hero-headline h1 em { font-style: italic; color: var(--gold); }
+    @keyframes scan {
+      0% {
+        top: 0;
+      }
 
-.hero-sub {
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
-  font-size: clamp(24px, 3vw, 36px);
-  color: var(--text2);
-  margin-bottom: 44px;
-  margin-top: 8px;
-  letter-spacing: -0.01em;
-}
+      100% {
+        top: 100%;
+      }
+    }
 
-.hero-bottom {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 40px;
-}
+    .hero-corner {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      opacity: 0.4;
+    }
 
-.hero-summary {
-  max-width: 520px;
-  font-size: 16px;
-  line-height: 1.8;
-  color: var(--text2);
-  font-weight: 300;
-}
-.hero-summary strong { color: var(--text); font-weight: 600; }
+    .hero-corner.tl {
+      top: 80px;
+      left: 60px;
+      border-top: 2px solid var(--cyan);
+      border-left: 2px solid var(--cyan);
+    }
 
-.hero-actions { display: flex; gap: 14px; flex-shrink: 0; }
+    .hero-corner.tr {
+      top: 80px;
+      right: 60px;
+      border-top: 2px solid var(--cyan);
+      border-right: 2px solid var(--cyan);
+    }
 
-.btn-gold {
-  font-family: 'DM Mono', monospace;
-  font-size: 12px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink);
-  background: var(--gold);
-  padding: 14px 30px;
-  text-decoration: none;
-  border-radius: 2px;
-  transition: background 0.2s, transform 0.15s;
-  font-weight: 500;
-}
-.btn-gold:hover { background: #0b2a01; transform: translateY(-2px); }
+    .hero-corner.bl {
+      bottom: 60px;
+      left: 60px;
+      border-bottom: 2px solid var(--cyan);
+      border-left: 2px solid var(--cyan);
+    }
 
-.btn-outline {
-  font-family: 'DM Mono', monospace;
-  font-size: 12px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text2);
-  background: transparent;
-  padding: 13px 28px;
-  text-decoration: none;
-  border: 1px solid var(--line2);
-  border-radius: 2px;
-  transition: border-color 0.2s, color 0.2s;
-}
-.btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+    .hero-corner.br {
+      bottom: 60px;
+      right: 60px;
+      border-bottom: 2px solid var(--cyan);
+      border-right: 2px solid var(--cyan);
+    }
 
-.hero-stats {
-  display: flex;
-  gap: 0;
-  border: 1px solid var(--line2);
-  overflow: hidden;
-  margin-top: 60px;
-  max-width: 680px;
-}
-.hero-stat {
-  flex: 1;
-  padding: 24px 28px;
-  border-right: 1px solid var(--line2);
-}
-.hero-stat:last-child { border-right: none; }
-.hero-stat-val {
-  font-family: 'Instrument Serif', serif;
-  font-size: 42px;
-  color: var(--gold);
-  line-height: 1;
-  margin-bottom: 4px;
-}
-.hero-stat-lbl {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
+    .hero-glow {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(0, 229, 255, 0.06) 0%, transparent 70%);
+      top: 50%;
+      right: -100px;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
 
-/* ══════════════ SHARED ══════════════ */
-section { position: relative; z-index: 1; }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 780px;
+    }
 
-.section-wrap { padding: 110px 72px; }
-.section-wrap.alt { background: var(--ink2); }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--cyan);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border: 1px solid var(--cyan-dim);
+      padding: 6px 14px;
+      border-radius: 2px;
+      margin-bottom: 28px;
+      animation: fadeUp 0.8s ease both;
+    }
 
-.eyebrow {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--gold);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-.eyebrow::before { content:''; width: 28px; height: 1px; background: var(--gold); }
+    .hero-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--cyan);
+      border-radius: 50%;
+      animation: blink 1.2s ease infinite;
+    }
 
-.section-title {
-  font-family: 'Instrument Serif', serif;
-  font-size: clamp(38px, 5vw, 64px);
-  font-weight: 400;
-  line-height: 0.95;
-  letter-spacing: -0.025em;
-  color: var(--white);
-  margin-bottom: 60px;
-}
-.section-title em { font-style: italic; color: var(--gold); }
+    @keyframes blink {
 
-/* ══════════════ ABOUT / PILLARS ══════════════ */
-.pillars-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--line);
-  border: 1px solid var(--line);
-  margin-top: -20px;
-}
+      0%,
+      100% {
+        opacity: 1;
+      }
 
-.pillar {
-  background: var(--ink);
-  padding: 44px 36px;
-  position: relative;
-  overflow: hidden;
-  transition: background 0.3s;
-}
-.pillar:hover { background: var(--ink2); }
-.pillar::before {
-  content:'';
-  position:absolute;
-  top:0; left:0; right:0;
-  height:2px;
-  background: var(--gold);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.4s cubic-bezier(0.25,1,0.5,1);
-}
-.pillar:hover::before { transform: scaleX(1); }
-.pillar-num {
-  font-family: 'Instrument Serif', serif;
-  font-size: 72px;
-  color: var(--gold);
-  position:absolute;
-  top:16px; right:20px;
-  line-height:1;
-  font-weight:400;
-  pointer-events:none;
-}
-.pillar-icon { font-size: 32px; display: block; margin-bottom: 20px; }
-.pillar-title { font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 12px; letter-spacing: -0.01em; }
-.pillar-body { font-size: 14px; line-height: 1.75; color: var(--text2); font-weight: 300; }
-.pillar-body strong { color: var(--text); font-weight: 600; }
+      50% {
+        opacity: 0.2;
+      }
+    }
 
-/* ══════════════ SKILLS ══════════════ */
-.skills-layout {
-  display: grid;
-  grid-template-columns: 1fr 1.4fr;
-  gap: 80px;
-  align-items: start;
-}
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 7vw, 90px);
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+      animation: fadeUp 0.8s 0.15s ease both;
+    }
 
-.skill-category { margin-bottom: 40px; }
-.skill-cat-title {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 18px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--line);
-}
-.skill-item {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 14px;
-}
-.skill-label { font-size: 14px; color: var(--text); font-weight: 500; }
-.skill-dots { display: flex; gap: 5px; }
-.dot { width: 8px; height: 8px; border-radius: 1px; background: var(--line2); transition: background 0.3s; }
-.dot.on { background: var(--gold); }
-.dot.half { background: var(--gold2); opacity:0.5; }
+    .hero-name span {
+      color: var(--cyan);
+    }
 
-.tag-section { margin-bottom: 32px; }
-.tag-section-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 12px;
-}
-.tag-row { display: flex; flex-wrap: wrap; gap: 8px; }
-.tag {
-  font-family: 'DM Mono', monospace;
-  font-size: 11.5px;
-  color: var(--text2);
-  background: var(--surface);
-  border: 1px solid var(--line);
-  padding: 6px 14px;
-  border-radius: 2px;
-  transition: border-color 0.2s, color 0.2s, background 0.2s;
-  cursor: default;
-}
-.tag:hover, .tag.featured {
-  border-color: var(--gold);
-  color: var(--gold);
-  background: #0b2a01;
-}
+    .hero-title {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      color: var(--text-muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      animation: fadeUp 0.8s 0.25s ease both;
+    }
 
-/* ══════════════ EXPERIENCE ══════════════ */
-.exp-grid {
-  display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 0;
-}
+    .hero-desc {
+      font-size: 17px;
+      color: #8aaccc;
+      max-width: 560px;
+      margin-bottom: 44px;
+      line-height: 1.8;
+      animation: fadeUp 0.8s 0.35s ease both;
+    }
 
-.exp-sidebar {
-  border-right: 1px solid var(--line);
-  padding-right: 48px;
-  padding-top: 4px;
-}
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      animation: fadeUp 0.8s 0.45s ease both;
+    }
 
-.exp-tab {
-  padding: 16px 0;
-  border-bottom: 1px solid var(--line);
-  cursor: pointer;
-  transition: opacity 0.2s;
-  opacity: 0.45;
-}
-.exp-tab.active { opacity: 1; }
-.exp-tab:first-child { border-top: 1px solid var(--line); }
-.exp-tab-date {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 6px;
-}
-.exp-tab-role { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 3px; }
-.exp-tab-org { font-size: 13px; color: var(--text2); }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--cyan);
+      color: var(--bg);
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+      transition: all 0.2s;
+    }
 
-.exp-content { padding-left: 52px; }
-.exp-panel { display: none; }
-.exp-panel.active { display: block; }
+    .btn-primary:hover {
+      background: #33ecff;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0, 229, 255, 0.3);
+    }
 
-.exp-panel-date {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 12px;
-}
-.exp-panel-role {
-  font-family: 'Instrument Serif', serif;
-  font-size: 32px;
-  font-weight: 400;
-  color: var(--white);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  margin-bottom: 6px;
-}
-.exp-panel-org { font-size: 15px; color: var(--electric); margin-bottom: 28px; font-weight: 500; }
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--cyan);
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 13px 28px;
+      text-decoration: none;
+      border: 1px solid var(--cyan);
+      cursor: pointer;
+      clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+      transition: all 0.2s;
+    }
 
-.exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 14px; }
-.exp-bullets li {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  font-size: 15px;
-  line-height: 1.7;
-  color: var(--text2);
-  font-weight: 300;
-}
-.exp-bullets li::before { content:'→'; color: var(--gold); flex-shrink:0; margin-top:1px; font-size:14px; }
-.exp-bullets li strong { color: var(--text); font-weight: 600; }
+    .btn-outline:hover {
+      background: var(--cyan-dim);
+      transform: translateY(-2px);
+    }
 
-/* ══════════════ EDUCATION SECTION ══════════════ */
-.edu-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px;
-  align-items: start;
-}
+    .hero-stats {
+      display: flex;
+      gap: 48px;
+      margin-top: 64px;
+      padding-top: 40px;
+      padding-left: 40px;
+      border-top: 1px solid var(--border);
+      animation: fadeUp 0.8s 0.55s ease both;
+    }
 
-.edu-main-card {
-  background: var(--surface);
-  border: 1px solid var(--line2);
-  border-radius: 6px;
-  padding: 44px;
-  position: relative;
-  overflow: hidden;
-  transition: border-color 0.25s;
-}
-.edu-main-card:hover { border-color: var(--gold); }
-.edu-main-card::before {
-  content:'';
-  position:absolute;
-  top:0; left:0; right:0;
-  height:3px;
-  background: linear-gradient(90deg, var(--gold), var(--gold2));
-}
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--cyan);
+      line-height: 1;
+    }
 
-.edu-degree-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 16px;
-}
-.edu-degree-name {
-  font-family: 'Instrument Serif', serif;
-  font-size: 36px;
-  font-weight: 400;
-  color: var(--white);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  margin-bottom: 6px;
-}
-.edu-university {
-  font-size: 16px;
-  color: var(--electric);
-  font-weight: 500;
-  margin-bottom: 6px;
-}
-.edu-location {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  color: var(--muted);
-  margin-bottom: 28px;
-}
-.edu-bullets { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-.edu-bullets li {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  font-size: 14px;
-  line-height: 1.65;
-  color: var(--text2);
-  font-weight: 300;
-}
-.edu-bullets li::before { content:'→'; color: var(--gold); flex-shrink:0; margin-top:1px; font-size:13px; }
-.edu-bullets li strong { color: var(--text); font-weight: 600; }
+    .stat-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
 
-.edu-side { display: flex; flex-direction: column; gap: 20px; }
+    /* ─── SECTION COMMON ─── */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 100px 60px;
+    }
 
-.edu-side-card {
-  background: var(--surface);
-  border: 1px solid var(--line2);
-  border-radius: 4px;
-  padding: 28px 32px;
-  transition: border-color 0.25s, transform 0.2s;
-}
-.edu-side-card:hover { border-color: var(--gold); transform: translateX(4px); }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: var(--cyan);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
-.edu-side-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 10px;
-}
-.edu-side-title { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
-.edu-side-sub { font-size: 13px; color: var(--text2); font-weight: 300; line-height: 1.6; }
-.edu-side-date {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  color: var(--muted);
-  margin-top: 8px;
-}
+    .section-label::after {
+      content: '';
+      flex: 1;
+      max-width: 60px;
+      height: 1px;
+      background: var(--cyan);
+    }
 
-/* ══════════════ PROJECTS ══════════════ */
-.projects-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  background: var(--line);
-  border: 1px solid var(--line);
-}
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(30px, 4vw, 48px);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 60px;
+    }
 
-.proj-row {
-  background: var(--ink);
-  display: grid;
-  grid-template-columns: 80px 1fr 1fr auto;
-  align-items: center;
-  gap: 32px;
-  padding: 32px 40px;
-  transition: background 0.25s;
-  position: relative;
-  overflow: hidden;
-  text-decoration: none;
-  color: inherit;
-}
-.proj-row::after {
-  content:'';
-  position:absolute;
-  left:0; top:0; bottom:0;
-  width:3px;
-  background: var(--gold);
-  transform: scaleY(0);
-  transform-origin: top;
-  transition: transform 0.3s cubic-bezier(0.25,1,0.5,1);
-}
-.proj-row:hover { background: var(--ink2); }
-.proj-row:hover::after { transform: scaleY(1); }
-.proj-row:hover .proj-github-hint { opacity:1; transform: translateY(0); }
+    /* ─── ABOUT ─── */
+    #about {
+      background: var(--surface);
+    }
 
-.proj-github-hint {
-  position: absolute;
-  top: 14px;
-  right: 40px;
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--gold);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  opacity: 0;
-  transform: translateY(-4px);
-  transition: opacity 0.25s, transform 0.25s;
-}
-.proj-github-hint svg {
-  width: 14px;
-  height: 14px;
-  fill: var(--gold);
-}
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
 
-.proj-index {
-  font-family: 'Instrument Serif', serif;
-  font-size: 40px;
-  font-weight: 400;
-  color: var(--gold);
-  line-height: 1;
-}
+    .about-text p {
+      color: #8aaccc;
+      font-size: 16px;
+      line-height: 1.9;
+      margin-bottom: 20px;
+    }
 
-.proj-category-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 8px;
-}
-.proj-name { font-size: 18px; font-weight: 700; color: var(--white); letter-spacing: -0.01em; }
+    .about-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 30px;
+    }
 
-.proj-desc-col { font-size: 14px; line-height: 1.65; color: var(--text2); font-weight: 300; }
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-muted);
+    }
 
-.proj-tags-col { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
-.proj-tag {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  color: var(--muted);
-  background: var(--surface);
-  border: 1px solid var(--line);
-  padding: 3px 10px;
-  border-radius: 2px;
-}
+    .meta-item span:first-child {
+      color: var(--cyan);
+      min-width: 20px;
+    }
 
-/* ══════════════ CERTIFICATIONS ══════════════ */
-.certs-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-}
+    .skills-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
 
-.cert-card {
-  background: var(--surface);
-  border: 1px solid var(--line2);
-  padding: 32px;
-  border-radius: 4px;
-  display: flex;
-  gap: 24px;
-  align-items: flex-start;
-  transition: border-color 0.25s, transform 0.2s;
-}
-.cert-card:hover { border-color: var(--gold); transform: translateY(-3px); }
+    .skill-group {}
 
-.cert-seal {
-  width: 48px; height: 48px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  flex-shrink: 0;
-  border: 1px solid var(--line2);
-}
-.cert-issuer {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 6px;
-}
-.cert-name { font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 4px; line-height: 1.3; }
-.cert-status {
-  display: inline-block;
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--electric);
-  background: rgba(77,255,180,0.06);
-  border: 1px solid rgba(77,255,180,0.2);
-  padding: 3px 10px;
-  border-radius: 2px;
-  margin-top: 8px;
-}
+    .skill-group-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
 
-/* ══════════════ CONTACT ══════════════ */
-.contact-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 100px;
-  align-items: center;
-}
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
 
-.contact-lead {
-  font-family: 'Instrument Serif', serif;
-  font-size: clamp(26px, 3vw, 40px);
-  font-weight: 400;
-  color: var(--white);
-  line-height: 1.3;
-  letter-spacing: -0.02em;
-  margin-bottom: 32px;
-}
-.contact-lead em { font-style: italic; color: var(--gold); }
-.contact-blurb { font-size: 15px; line-height: 1.8; color: var(--text2); font-weight: 300; margin-bottom: 40px; }
+    .skill-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 5px 12px;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+      transition: all 0.2s;
+      cursor: default;
+    }
 
-.contact-row { display: flex; flex-direction: column; gap: 12px; }
-.contact-item {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  text-decoration: none;
-  padding: 16px 20px;
-  background: var(--surface);
-  border: 1px solid var(--line2);
-  border-radius: 4px;
-  transition: border-color 0.25s, transform 0.2s;
-}
-.contact-item:hover { border-color: var(--gold); transform: translateX(4px); }
-.contact-item-icon {
-  width: 36px; height: 36px;
-  background: var(--line);
-  border-radius: 50%;
-  display:flex; align-items:center; justify-content:center;
-  font-size: 16px;
-  flex-shrink: 0;
-}
-.contact-item-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 3px;
-}
-.contact-item-val { font-size: 14px; color: var(--text); font-weight: 500; }
+    .skill-tag:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      background: var(--cyan-dim);
+    }
 
-.otw-card {
-  background: linear-gradient(135deg, var(--surface) 0%, var(--ink2) 100%);
-  border: 1px solid var(--line2);
-  border-radius: 6px;
-  padding: 48px 40px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-.otw-card::before {
-  content:'';
-  position:absolute;
-  top:-50%; left:-50%;
-  width:200%; height:200%;
-  background: radial-gradient(circle at center, rgba(232,197,71,0.05) 0%, transparent 60%);
-  pointer-events:none;
-}
-.otw-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--electric);
-  background: rgba(77,255,180,0.06);
-  border: 1px solid rgba(77,255,180,0.2);
-  padding: 8px 16px;
-  border-radius: 40px;
-  margin-bottom: 28px;
-}
-.otw-badge::before {
-  content:'';
-  width:7px; height:7px;
-  background: var(--electric);
-  border-radius:50%;
-  box-shadow: 0 0 8px var(--electric);
-  animation: blink 1.8s ease-in-out infinite;
-}
-@keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+    .skill-tag.highlight {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      background: var(--cyan-dim);
+    }
 
-.otw-title {
-  font-family: 'Instrument Serif', serif;
-  font-size: 36px;
-  font-weight: 400;
-  color: var(--white);
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-  margin-bottom: 8px;
-}
-.otw-role {
-  font-family: 'DM Mono', monospace;
-  font-size: 12px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 28px;
-}
-.otw-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 32px; }
-.otw-tag {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  color: var(--text2);
-  background: var(--ink);
-  border: 1px solid var(--line);
-  padding: 5px 14px;
-  border-radius: 2px;
-}
-.otw-cta {
-  display: inline-block;
-  font-family: 'DM Mono', monospace;
-  font-size: 12px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink);
-  background: var(--gold);
-  padding: 14px 36px;
-  border-radius: 2px;
-  text-decoration: none;
-  font-weight: 500;
-  transition: background 0.2s, transform 0.15s;
-}
-.otw-cta:hover { background: #0b2a01; transform: translateY(-2px); }
+    /* ─── PROJECTS ─── */
+    #projects {}
 
-/* ══════════════ FOOTER ══════════════ */
-footer {
-  padding: 30px 72px;
-  background: var(--ink);
-  border-top: 1px solid var(--line);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.footer-left { font-family: 'Instrument Serif', serif; font-style: italic; font-size: 18px; color: var(--gold); }
-.footer-right { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: var(--muted); }
+    .projects-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 60px;
+    }
 
-/* ══════════════ ANIMATIONS ══════════════ */
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-.reveal.up { opacity:1; transform:none; }
+    .projects-header .section-title {
+      margin-bottom: 0;
+    }
 
-.reveal-left {
-  opacity: 0;
-  transform: translateX(-24px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-.reveal-left.up { opacity:1; transform:none; }
+    .project-filter {
+      display: flex;
+      gap: 8px;
+    }
 
-[data-stagger] > * {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-}
-[data-stagger].up > * { opacity:1; transform:none; }
+    .filter-btn {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
 
-/* ══════════════ RESPONSIVE ══════════════ */
-@media(max-width:1100px){
-  nav,#hero,section .section-wrap { padding-left:36px; padding-right:36px; }
-  .skills-layout { grid-template-columns:1fr; }
-  .exp-grid { grid-template-columns:1fr; }
-  .exp-sidebar { border-right:none; border-bottom:1px solid var(--line); padding-right:0; padding-bottom:32px; margin-bottom:40px; }
-  .exp-content { padding-left:0; }
-  .edu-layout { grid-template-columns:1fr; }
-  .proj-row { grid-template-columns:60px 1fr; }
-  .proj-desc-col,.proj-tags-col { display:none; }
-  .contact-layout { grid-template-columns:1fr; gap:48px; }
-  .pillars-grid { grid-template-columns:1fr 1fr; }
-}
-@media(max-width:720px){
-  .nav-links { display:none; }
-  .hero-headline h1 { font-size: 48px; }
-  .pillars-grid,.certs-grid { grid-template-columns:1fr; }
-  .hero-stats { flex-direction:column; border:none; }
-  .hero-stat { border:1px solid var(--line); margin-bottom:1px; border-right:1px solid var(--line) !important; }
-}
-</style>
+    .filter-btn.active,
+    .filter-btn:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      background: var(--cyan-dim);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 24px;
+    }
+
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s;
+      cursor: default;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--cyan), transparent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s;
+    }
+
+    .project-card:hover {
+      border-color: rgba(0, 229, 255, 0.25);
+      background: var(--card-hover);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 229, 255, 0.1);
+    }
+
+    .project-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .project-card.featured {
+      grid-column: span 2;
+      background: linear-gradient(135deg, #0e1a28 0%, #0a1825 100%);
+      border-color: rgba(0, 229, 255, 0.2);
+    }
+
+    .project-card.featured::before {
+      background: linear-gradient(90deg, var(--cyan), var(--orange));
+    }
+
+    .project-card-inner {
+      display: flex;
+      gap: 40px;
+    }
+
+    .project-featured-content {
+      flex: 1;
+    }
+
+    .project-featured-metrics {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      min-width: 200px;
+      padding-left: 40px;
+      border-left: 1px solid var(--border);
+    }
+
+    .metric-item {}
+
+    .metric-val {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--cyan);
+    }
+
+    .metric-val.orange {
+      color: var(--orange);
+    }
+
+    .metric-val.green {
+      color: var(--green);
+    }
+
+    .metric-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .project-num {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .project-type {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border: 1px solid var(--orange);
+      color: var(--orange);
+    }
+
+    .project-type.cv {
+      border-color: var(--cyan);
+      color: var(--cyan);
+    }
+
+    .project-type.dt {
+      border-color: #aa88ff;
+      color: #aa88ff;
+    }
+
+    .project-type.iot {
+      border-color: var(--green);
+      color: var(--green);
+    }
+
+    .project-title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .project-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .project-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      margin-bottom: 24px;
+    }
+
+    .project-bullets li {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: #6a96b8;
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .project-bullets li::before {
+      content: '›';
+      position: absolute;
+      left: 0;
+      color: var(--cyan);
+    }
+
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tech-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      padding: 3px 9px;
+      background: rgba(0, 229, 255, 0.06);
+      border: 1px solid rgba(0, 229, 255, 0.15);
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 24px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 1px;
+      color: var(--cyan);
+      text-decoration: none;
+      text-transform: uppercase;
+      opacity: 0.8;
+      transition: opacity 0.2s;
+    }
+
+    .project-link:hover {
+      opacity: 1;
+    }
+
+    /* ─── EXPERIENCE ─── */
+    #experience {
+      background: var(--surface);
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 40px;
+      max-width: 780px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 6px;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--cyan), transparent);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 56px;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -44px;
+      top: 6px;
+      width: 8px;
+      height: 8px;
+      background: var(--cyan);
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 12px var(--cyan-glow);
+    }
+
+    .timeline-date {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--cyan);
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .timeline-role {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .timeline-company {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .timeline-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .timeline-bullets li {
+      font-size: 14px;
+      color: #7a9ab8;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .timeline-bullets li::before {
+      content: '//';
+      position: absolute;
+      left: 0;
+      color: var(--cyan);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      top: 3px;
+      opacity: 0.6;
+    }
+
+    /* ─── CERTIFICATIONS ─── */
+    #certs {}
+
+    .certs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .cert-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      transition: all 0.2s;
+    }
+
+    .cert-card:hover {
+      border-color: rgba(0, 229, 255, 0.25);
+      background: var(--card-hover);
+    }
+
+    .cert-icon {
+      font-size: 22px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .cert-name {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    .cert-issuer {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      letter-spacing: 0.5px;
+    }
+
+    /* ─── CONTACT ─── */
+    #contact {
+      background: var(--surface);
+      text-align: center;
+    }
+
+    #contact .section-label {
+      justify-content: center;
+    }
+
+    #contact .section-label::after {
+      display: none;
+    }
+
+    .contact-subtitle {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 500px;
+      margin: 0 auto 48px;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+
+    .contact-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 20px 28px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.2s;
+    }
+
+    .contact-card:hover {
+      border-color: var(--cyan);
+      background: var(--cyan-dim);
+      transform: translateY(-2px);
+    }
+
+    .contact-card-icon {
+      font-size: 20px;
+    }
+
+    .contact-card-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      display: block;
+    }
+
+    .contact-card-val {
+      font-family: var(--font-display);
+      font-size: 14px;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 32px;
+      border-top: 1px solid var(--border);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: 1px;
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 2px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--cyan);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav {
+        padding: 16px 24px;
+      }
+
+      .nav-links {
+        gap: 20px;
+      }
+
+      section {
+        padding: 80px 24px;
+      }
+
+      #hero {
+        padding: 100px 24px 60px;
+      }
+
+      .hero-stats {
+        gap: 28px;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .project-card.featured {
+        grid-column: span 1;
+      }
+
+      .project-card-inner {
+        flex-direction: column;
+      }
+
+      .project-featured-metrics {
+        border-left: none;
+        border-top: 1px solid var(--border);
+        padding-left: 0;
+        padding-top: 20px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 24px;
+      }
+
+      .projects-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+      }
+
+      .hero-corner.tr,
+      .hero-corner.bl,
+      .hero-corner.br {
+        display: none;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- ═══ NAV ═══ -->
-<nav>
-  <a class="logo" href="#hero">
-    <span class="logo-name">Hadal Magdy</span>
-    <span class="logo-dot"></span>
-  </a>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#education">Education</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <a class="nav-hire" href="mailto:hadalprofessional@gmail.com">Hire Me</a>
-</nav>
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">HM</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#certs">Certs</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
 
-<!-- ═══ HERO ═══ -->
-<section id="hero">
-  <div class="hero-bg-circle c1"></div>
-  <div class="hero-bg-circle c2"></div>
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-scan"></div>
+    <div class="hero-corner tl"></div>
+    <div class="hero-corner tr"></div>
+    <div class="hero-corner bl"></div>
+    <div class="hero-corner br"></div>
+    <div class="hero-glow"></div>
 
-  <div class="hero-eyebrow reveal">
-    <span class="hero-eyebrow-line"></span>
-    <span class="hero-eyebrow-text">Digital Twin · Industry 4.0 · Automation Engineer</span>
-  </div>
-
-  <div class="hero-headline reveal">
-    <h1>Hadal<br><em>Magdy</em></h1>
-  </div>
-  <p class="hero-sub reveal">Building the Intelligence Layer of Industry 4.0</p>
-
-  <div class="hero-bottom reveal">
-    <p class="hero-summary">
-      B.Sc. Computer Science · <strong>Digital Twin & Industrial Automation Engineer</strong> with certified expertise in IoT, Embedded Systems, AI, OPC UA/MQTT pipelines, Siemens PLCs, and real-time simulation. Bridging the physical and digital worlds to enable smarter, self-aware industrial systems.
-    </p>
-    <div class="hero-actions">
-      <a class="btn-gold" href="#projects">View My Work</a>
-      <a class="btn-outline" href="https://github.com/hadal-magdy" target="_blank">GitHub →</a>
-    </div>
-  </div>
-
-  <div class="hero-stats reveal">
-    <div class="hero-stat">
-      <div class="hero-stat-val">4+</div>
-      <div class="hero-stat-lbl">DT Projects Deployed</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-val">4</div>
-      <div class="hero-stat-lbl">Industry Certifications</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-val">5+</div>
-      <div class="hero-stat-lbl">Tech Domains Mastered</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-val">∞</div>
-      <div class="hero-stat-lbl">Curiosity</div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ ABOUT / PILLARS ═══ -->
-<section id="about">
-  <div class="section-wrap alt">
-    <div class="eyebrow reveal">What I Bring</div>
-    <h2 class="section-title reveal">Four Pillars of<br><em>Expertise</em></h2>
-
-    <div class="pillars-grid" data-stagger>
-      <div class="pillar">
-        <div class="pillar-num">01</div>
-        <span class="pillar-icon">🔁</span>
-        <div class="pillar-title">Digital Twin Engineering</div>
-        <p class="pillar-body">Designing and deploying <strong>high-fidelity digital twins</strong> using Unity, NVIDIA Omniverse, Isaac Sim, and Blender. From water treatment plants to robotic arms — I build virtual replicas that mirror physical systems in real time for predictive maintenance and simulation.</p>
+    <div class="hero-content">
+      <div class="hero-badge">Available for Projects</div>
+      <h1 class="hero-name">Hadal<br><span>Magdy</span></h1>
+      <p class="hero-title">Computer Vision Engineer &nbsp;/&nbsp; AI Systems &amp; Simulation</p>
+      <p class="hero-desc">
+        I build computer vision systems that keep working after the demo — dataset curation,
+        model training, and deployment across cloud GPU and edge hardware, for drones,
+        orchards, and robotic arms.
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn-primary">&#10141; View Projects</a>
+        <a href="mailto:hadalprofessional@gmail.com" class="btn-outline">&#9993; Get In Touch</a>
       </div>
-      <div class="pillar">
-        <div class="pillar-num">02</div>
-        <span class="pillar-icon">⚙️</span>
-        <div class="pillar-title">Industrial Automation & PLC</div>
-        <p class="pillar-body">Certified in <strong>Siemens TIA Portal (S7-1513)</strong> with hands-on experience building OPC UA and MQTT pipelines between PLCs and supervisory systems. Proficient in SCADA, HMI, PID control, IEC 61850, IEC 60870-5-104, and industrial network protocols.</p>
-      </div>
-      <div class="pillar">
-        <div class="pillar-num">03</div>
-        <span class="pillar-icon">📡</span>
-        <div class="pillar-title">IoT & Embedded Systems</div>
-        <p class="pillar-body">Fluent in <strong>C, MicroPython, AVR, ESP32, Raspberry Pi, PIC18</strong>, and Embedded Linux. From low-level firmware to end-to-end IoT sensor networks — I connect physical hardware to the data layer with precision and reliability.</p>
-      </div>
-      <div class="pillar">
-        <div class="pillar-num">04</div>
-        <span class="pillar-icon">🧠</span>
-        <div class="pillar-title">AI & Machine Learning</div>
-        <p class="pillar-body">NVIDIA-certified in Deep Learning, with applied experience using <strong>CNNs, Autoencoders, and AI Agents</strong> for anomaly detection and industrial predictive maintenance. Bringing intelligence into automation workflows where it matters most.</p>
-      </div>
-      <div class="pillar">
-        <div class="pillar-num">05</div>
-        <span class="pillar-icon">🖥️</span>
-        <div class="pillar-title">AR Visualization & HMI</div>
-        <p class="pillar-body">Built <strong>Unity-based Augmented Reality</strong> applications that overlay live PLC telemetry onto industrial equipment, giving technicians real-time fault and performance data without physical contact. Human-machine interfaces that actually make sense.</p>
-      </div>
-      <div class="pillar">
-        <div class="pillar-num">06</div>
-        <span class="pillar-icon">🔗</span>
-        <div class="pillar-title">Industrial Networking</div>
-        <p class="pillar-body">Deep knowledge of <strong>IEC 61850 (GOOSE), IEC 60870-5-104, RTU, VLANs, Multicast</strong>. Designing and commissioning the communication backbone that keeps industrial systems synchronized, secure, and responsive.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ SKILLS ═══ -->
-<section id="skills">
-  <div class="section-wrap">
-    <div class="eyebrow reveal">Technical Arsenal</div>
-    <h2 class="section-title reveal">Skills &<br><em>Technologies</em></h2>
-
-    <div class="skills-layout">
-      <div class="skills-left reveal-left">
-        <div class="skill-category">
-          <div class="skill-cat-title">Automation & Protocols</div>
-          <div class="skill-item"><span class="skill-label">Siemens S7-1500 / TIA Portal</span><div class="skill-dots"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot half"></span></div></div>
-          <div class="skill-item"><span class="skill-label">OPC UA / MQTT</span><div class="skill-dots"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span></div></div>
-          <div class="skill-item"><span class="skill-label">IEC 61850 / IEC 60870-5-104</span><div class="skill-dots"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot half"></span></div></div>
-          <div class="skill-item"><span class="skill-label">SCADA / HMI / PID Control</span><div class="skill-dots"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot half"></span></div></div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">4</div>
+          <div class="stat-label">Tech Domains Mastered</div>
         </div>
-        <div class="skill-category">
-          <div class="skill-cat-title">Digital Twin & Simulation</div>
-          <div class="skill-item"><span class="skill-label">Unity (C#) — AR & DT Apps</span><div class="skill-dots"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span></div></div>
-          <div class="skill-item"><span class="skill-label">NVIDIA Omniverse / Isaac Sim</span><div class="skill-dots"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot half"></span></div></div>
-          <div class="skill-item"><span class="skill-label">Blender / SolidWorks / Webots</span><div class="skill-dots"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot half"></span><span class="dot"></span></div></div>
+        <div>
+          <div class="stat-num">6</div>
+          <div class="stat-label">Certifications</div>
         </div>
-        <div class="skill-category">
-          <div class="skill-cat-title">Embedded & AI</div>
-          <div class="skill-item"><span class="skill-label">C / Assembly (AVR, PIC18)</span><div class="skill-dots"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span></div></div>
-          <div class="skill-item"><span class="skill-label">ESP32 / Raspberry Pi / Linux</span><div class="skill-dots"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot half"></span></div></div>
-          <div class="skill-item"><span class="skill-label">Deep Learning / CNN / Autoencoders</span><div class="skill-dots"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot half"></span></div></div>
+        <div>
+          <div class="stat-num">5</div>
+          <div class="stat-label">CV Projects</div>
+        </div>
+        <div>
+          <div class="stat-num">∞</div>
+          <div class="stat-label">Curiosity</div>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="skills-right reveal">
-        <div class="tag-section">
-          <div class="tag-section-label">Digital Twin & Simulation</div>
-          <div class="tag-row">
-            <span class="tag featured">Unity (C#)</span><span class="tag featured">NVIDIA Omniverse</span><span class="tag featured">Isaac Sim</span><span class="tag">Blender</span><span class="tag">SolidWorks</span><span class="tag">Webots</span><span class="tag">Robotics Kinematics</span><span class="tag">HIL Simulation</span>
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-label">001 — About</div>
+    <div class="about-grid">
+      <div class="about-text fade-in">
+        <h2 class="section-title">The Engineer<br>Behind the Code</h2>
+        <p>
+          I'm a Computer Vision Engineer working across agritech, industrial inspection, and robotics perception.
+          Currently building CV pipelines at 4DT.io, with freelance work on the side for agricultural clients.
+        </p>
+        <p>
+          From a multi-stage pipeline that detects and grades citrus fruit in orchard video, to YOLO models that
+          spot palm trees from drone footage and read utility meters, to AI vision on a UR5e robotic arm — I care
+          about getting pipelines to run on real, messy data, not just clean up a demo notebook.
+        </p>
+        <div class="about-meta">
+          <div class="meta-item"><span>📍</span>Giza, Egypt · Open to Relocation</div>
+          <div class="meta-item"><span>🎓</span>B.Sc. Computer Science — Mansoura University</div>
+          <div class="meta-item"><span>💼</span>Digital Twin Engineer @ 4DT.io</div>
+          <div class="meta-item"><span>🔗</span><a href="https://github.com/hadal-magdy"
+              style="color:var(--cyan);text-decoration:none">github.com/hadal-magdy</a></div>
+        </div>
+      </div>
+      <div class="skills-grid fade-in">
+        <div class="skill-group">
+          <div class="skill-group-label">Computer Vision <span
+              style="color:var(--cyan);font-size:9px;letter-spacing:1.5px;">● ADVANCED</span></div>
+          <div class="skill-tags">
+            <span class="skill-tag highlight">YOLO</span>
+            <span class="skill-tag highlight">CNN</span>
+            <span class="skill-tag highlight">OpenCV</span>
+            <span class="skill-tag highlight">Autoencoders</span>
+            <span class="skill-tag">Object Detection</span>
+            <span class="skill-tag">Image Classification & Clustering</span>
+            <span class="skill-tag">Transfer Learning</span>
           </div>
         </div>
-        <div class="tag-section">
-          <div class="tag-section-label">Industrial Automation</div>
-          <div class="tag-row">
-            <span class="tag featured">Siemens S7-1500</span><span class="tag featured">TIA Portal</span><span class="tag featured">OPC UA</span><span class="tag featured">MQTT</span><span class="tag featured">IEC 61850</span><span class="tag featured">GOOSE</span><span class="tag featured">IEC 60870-5-104</span><span class="tag">SCADA</span><span class="tag">HMI</span><span class="tag">PID Control</span><span class="tag">RTU</span><span class="tag">Modbus</span><span class="tag">VLAN</span><span class="tag">Multicast</span><span class="tag">Power BI</span>
+        <div class="skill-group">
+          <div class="skill-group-label">AI / ML <span style="color:var(--cyan);font-size:9px;letter-spacing:1.5px;">●
+              ADVANCED</span></div>
+          <div class="skill-tags">
+            <span class="skill-tag highlight">PyTorch</span>
+            <span class="skill-tag">TensorFlow</span>
+            <span class="skill-tag">Scikit-learn</span>
+            <span class="skill-tag">Hugging Face Transformers</span>
+            <span class="skill-tag">Deep Learning</span>
+            <span class="skill-tag">Fine-tuning</span>
           </div>
         </div>
-        <div class="tag-section">
-          <div class="tag-section-label">Embedded & IoT</div>
-          <div class="tag-row">
-            <span class="tag featured">C</span><span class="tag featured">Assembly</span><span class="tag">MicroPython</span><span class="tag">AVR</span><span class="tag">ESP32</span><span class="tag">Raspberry Pi</span><span class="tag">Embedded Linux</span><span class="tag">PIC18</span><span class="tag">SPI</span><span class="tag">Proteus</span>
+        <div class="skill-group">
+          <div class="skill-group-label">Languages & Frameworks</div>
+          <div class="skill-tags">
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">C</span>
+            <span class="skill-tag">Flask</span>
+            <span class="skill-tag">Streamlit</span>
           </div>
         </div>
-        <div class="tag-section">
-          <div class="tag-section-label">AI / Machine Learning</div>
-          <div class="tag-row">
-            <span class="tag featured">Deep Learning</span><span class="tag featured">CNN</span><span class="tag featured">Autoencoders</span><span class="tag">AI Agents</span><span class="tag">Machine Learning</span><span class="tag">Qt Framework (C++)</span>
+        <div class="skill-group">
+          <div class="skill-group-label">Digital Twin & Simulation <span
+              style="color:var(--orange);font-size:9px;letter-spacing:1.5px;">● INTERMEDIATE</span></div>
+          <div class="skill-tags">
+            <span class="skill-tag">NVIDIA Isaac Sim</span>
+            <span class="skill-tag">Unity</span>
+            <span class="skill-tag">Blender</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-label">Embedded & IoT <span
+              style="color:var(--text-dim);font-size:9px;letter-spacing:1.5px;">● WORKING KNOWLEDGE</span></div>
+          <div class="skill-tags">
+            <span class="skill-tag">ESP32</span>
+            <span class="skill-tag">Raspberry Pi</span>
+            <span class="skill-tag">Arduino</span>
+            <span class="skill-tag">AVR / PIC18</span>
+            <span class="skill-tag">Siemens S7-1500</span>
+            <span class="skill-tag">TIA Portal</span>
+            <span class="skill-tag">MQTT</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-label">Tools</div>
+          <div class="skill-tags">
+            <span class="skill-tag">Git</span>
+            <span class="skill-tag">Power BI</span>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ═══ EXPERIENCE ═══ -->
-<section id="experience">
-  <div class="section-wrap alt">
-    <div class="eyebrow reveal">Career Path</div>
-    <h2 class="section-title reveal">Professional<br><em>Experience</em></h2>
-
-    <div class="exp-grid reveal">
-      <div class="exp-sidebar">
-        <div class="exp-tab active" onclick="switchExp(0,this)">
-          <div class="exp-tab-date">Apr 2026 — Present</div>
-          <div class="exp-tab-role">Digital Twin Engineer</div>
-          <div class="exp-tab-org">4DT.io</div>
-        </div>
-        <div class="exp-tab" onclick="switchExp(1,this)">
-          <div class="exp-tab-date">Jan 2026 — Present</div>
-          <div class="exp-tab-role">Digital Twin Intern</div>
-          <div class="exp-tab-org">Industry 4.0 CoE · Egypt</div>
-        </div>
-      </div>
-
-      <div class="exp-content">
-        <!-- Panel 0 -->
-        <div class="exp-panel active" id="exp-0">
-          <div class="exp-panel-date">Apr 2026 — Present</div>
-          <div class="exp-panel-role">Digital Twin Engineer</div>
-          <div class="exp-panel-org">4DT.io</div>
-          <ul class="exp-bullets">
-            <li>Developed <strong>smart city and building solutions</strong> using computer vision and depth cameras to enable real-time spatial analysis and urban infrastructure monitoring.</li>
-            <li>Created <strong>high-fidelity 3D models for the Imhotep Center</strong> in Knowledge City, supporting immersive architectural simulations and accurate virtual synchronization.</li>
-            <li>Implemented <strong>spatial data pipelines and CV tasks</strong> to bridge physical assets with digital twin environments, optimizing automated data extraction for smart building ecosystems.</li>
-          </ul>
-        </div>
-        <!-- Panel 1 -->
-        <div class="exp-panel" id="exp-1">
-          <div class="exp-panel-date">Jan 2026 — Present</div>
-          <div class="exp-panel-role">Digital Twin Intern</div>
-          <div class="exp-panel-org">Industry 4.0 Center of Excellence · Egypt</div>
-          <ul class="exp-bullets">
-            <li>Built <strong>OPC UA & MQTT data pipelines</strong> connecting Siemens S7 PLCs to digital twin environments, enabling real-time telemetry, remote monitoring, and live dashboards for industrial systems.</li>
-            <li>Developed <strong>Unity-based Augmented Reality (AR) and Digital Twin applications</strong> for industrial predictive maintenance, overlaying live sensor data onto physical equipment to reduce manual inspection overhead.</li>
-            <li>Implemented <strong>Hardware-in-the-Loop (HIL) robotic simulations</strong> in NVIDIA Omniverse / Isaac Sim, validating control algorithms before physical deployment — shortening commissioning cycles significantly.</li>
-          </ul>
-        </div>
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="projects-header">
+      <div>
+        <div class="section-label">002 — Projects</div>
+        <h2 class="section-title">Selected Work</h2>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- ═══ PROJECTS ═══ -->
-<section id="projects">
-  <div class="section-wrap">
-    <div class="eyebrow reveal">Built Work</div>
-    <h2 class="section-title reveal">Key<br><em>Projects</em></h2>
+    <div class="projects-grid">
+      <!-- Palm Tree Detection & GPS Localization -->
+      <div class="project-card fade-in">
+        <div class="project-num">
+          <span>01</span>
+          <span class="project-type cv">Computer Vision</span>
+        </div>
+        <h3 class="project-title">Palm Tree Detection & GPS Localization</h3>
+        <p class="project-desc">
+          Detects and geolocates palm trees from drone aerial imagery, with a dashboard for browsing results on a map.
+        </p>
+        <ul class="project-bullets">
+          <li>YOLO11 trained on drone imagery for palm tree detection</li>
+          <li>Streamlit dashboard with a Leaflet.js map, confidence-coded markers, and live training metrics</li>
+          <li>GPS localization pipeline built around a clean stub for real EXIF geodata</li>
+        </ul>
+        <div class="project-tech">
+          <span class="tech-tag">YOLO11</span>
+          <span class="tech-tag">Streamlit</span>
+          <span class="tech-tag">Leaflet.js</span>
+          <span class="tech-tag">GPS</span>
+          <span class="tech-tag">Computer Vision</span>
+        </div>
+        <a href="https://drive.google.com/drive/folders/1fBxqPbLA628VkQpN_-px7_EhawETytJ0" class="project-link"
+          target="_blank">
+          &#10141; View
+        </a>
+      </div>
 
-    <div class="projects-list reveal">
+      <!-- UR5e Digital Twin -->
+      <div class="project-card fade-in">
+        <div class="project-num">
+          <span>02</span>
+          <span class="project-type cv">CV + Robotics</span>
+        </div>
+        <h3 class="project-title">Robot Arm Digital Twin — UR5e</h3>
+        <p class="project-desc">
+          AI-powered vision system integrated with a physics-accurate digital twin of the Universal Robots UR5e arm,
+          enabling safe motion validation before physical deployment.
+        </p>
+        <ul class="project-bullets">
+          <li>Built an AI vision pipeline for object detection and localization relative to the UR5e end-effector</li>
+          <li>Implemented Forward & Inverse Kinematics for accurate end-effector positioning</li>
+          <li>Physics-accurate 3D digital twin in NVIDIA Isaac Sim for motion validation</li>
+          <li>Integrated Hardware-in-the-Loop (HIL) simulations to validate control logic pre-deployment</li>
+        </ul>
+        <div class="project-tech">
+          <span class="tech-tag">NVIDIA Isaac Sim</span>
+          <span class="tech-tag">Omniverse</span>
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">ROS</span>
+          <span class="tech-tag">FK / IK</span>
+          <span class="tech-tag">Computer Vision</span>
+        </div>
+        <a href="https://drive.google.com/drive/folders/1Cwm5icddjHb2IUVQX_lVsC1Cr7ogWSxs" class="project-link"
+          target="_blank">
+          &#10141; View
+        </a>
+      </div>
 
-      <a class="proj-row" href="https://github.com/hadal-magdy/Conveyor-Belt-System" target="_blank">
-        <div class="proj-github-hint">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 013.01-.4c1.02 0 2.05.14 3.01.4 2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
-          View on GitHub →
+      <!-- Greenhouse Digital Twin -->
+      <div class="project-card fade-in">
+        <div class="project-num">
+          <span>03</span>
+          <span class="project-type dt">Digital Twin</span>
         </div>
-        <div class="proj-index">01</div>
-        <div class="proj-info">
-          <div class="proj-category-label">Industrial Automation · Digital Twin</div>
-          <div class="proj-name">Conveyor Belt System — PLC + Digital Twin</div>
+        <h3 class="project-title">Greenhouse Digital Twin Monitoring System</h3>
+        <p class="project-desc">
+          A complete IoT-to-digital-twin pipeline for greenhouse monitoring and remote control, using ESP32 for sensing
+          and Raspberry Pi as a central gateway.
+        </p>
+        <ul class="project-bullets">
+          <li>ESP32 for multi-sensor data acquisition (temperature, humidity, soil)</li>
+          <li>Raspberry Pi as central gateway with MQTT communication</li>
+          <li>Real-time 3D visualization and remote control interface</li>
+        </ul>
+        <div class="project-tech">
+          <span class="tech-tag">ESP32</span>
+          <span class="tech-tag">Raspberry Pi</span>
+          <span class="tech-tag">MQTT</span>
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">Digital Twin</span>
         </div>
-        <div class="proj-desc-col">Programmed a Siemens S7-1500 PLC using Ladder Logic for full conveyor belt automation. Built a real-time 3D digital twin in Unity for system visualization, monitoring, and validation alongside the physical PLC.</div>
-        <div class="proj-tags-col">
-          <span class="proj-tag">Siemens S7-1500</span>
-          <span class="proj-tag">TIA Portal</span>
-          <span class="proj-tag">Unity</span>
-        </div>
-      </a>
+        <a href="https://drive.google.com/drive/folders/1Xmh9llfp52mB3BejjiXcupf1J7qobg2o" class="project-link"
+          target="_blank">
+          &#10141; View
+        </a>
+      </div>
 
-      <a class="proj-row" href="https://drive.google.com/drive/folders/1YGLeRaHVkuFSLe369gvopugbAi3d4Vns?sort=13%26direction=a" target="_blank">
-        <div class="proj-github-hint">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 013.01-.4c1.02 0 2.05.14 3.01.4 2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
-          View on GitHub →
+      <!-- Water Meter CV -->
+      <div class="project-card fade-in">
+        <div class="project-num">
+          <span>04</span>
+          <span class="project-type cv">Computer Vision</span>
         </div>
-        <div class="proj-index">02</div>
-        <div class="proj-info">
-          <div class="proj-category-label">Computer Vision · AI Pipeline</div>
-          <div class="proj-name">Water Meter Reading System — YOLOv8</div>
+        <h3 class="project-title">Water Meter Reading System</h3>
+        <p class="project-desc">
+          Computer vision task to read digital water meter readings, format the result as JSON, and serve it
+          through a Flask API for downstream systems to poll.
+        </p>
+        <ul class="project-bullets">
+          <li>YOLOv8 for object detection and digit recognition</li>
+          <li>Flask API wrapping the JSON output</li>
+          <li>HTTP POST request to server</li>
+        </ul>
+        <div class="project-tech">
+          <span class="tech-tag">YOLOv8</span>
+          <span class="tech-tag">Flask</span>
+          <span class="tech-tag">JSON</span>
+          <span class="tech-tag">HTTP</span>
+          <span class="tech-tag">Computer Vision</span>
         </div>
-        <div class="proj-desc-col">Trained YOLOv8 on 2,550 meter images achieving 97.6% mAP50 accuracy. Built a full pipeline: digit detection → sorting → correction → Flask API. Improved clean reading rate from 75% to 100%.</div>
-        <div class="proj-tags-col">
-          <span class="proj-tag">YOLOv8</span>
-          <span class="proj-tag">Computer Vision</span>
-          <span class="proj-tag">Flask API</span>
-        </div>
-      </a>
+        <a href="https://drive.google.com/drive/folders/1YGLeRaHVkuFSLe369gvopugbAi3d4Vns" class="project-link"
+          target="_blank">
+          &#10141; View
+        </a>
+      </div>
 
-      <a class="proj-row" href="https://drive.google.com/drive/folders/1Cwm5icddjHb2IUVQX_lVsC1Cr7ogWSxs?direction=a" target="_blank">
-        <div class="proj-github-hint">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 013.01-.4c1.02 0 2.05.14 3.01.4 2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
-          View on GitHub →
+      <!-- FEATURED: Citrus detection pipeline -->
+      <div class="project-card featured fade-in">
+        <div class="project-num">
+          <span>05 / FEATURED</span>
+          <span class="project-type cv">Computer Vision</span>
         </div>
-        <div class="proj-index">03</div>
-        <div class="proj-info">
-          <div class="proj-category-label">Robotics · HIL Simulation</div>
-          <div class="proj-name">Robot Arm Digital Twin — UR5</div>
+        <h3 class="project-title">Citrus Detection & Ripeness Classification</h3>
+        <p class="project-desc">
+          My flagship project: a multi-stage pipeline that finds citrus fruit in dense orchard video, filters out
+          leaves that get mistaken for unripe fruit, then classifies what's left as ripe or unripe. Rebuilt several
+          times as real footage kept breaking assumptions the training data made.
+        </p>
+        <ul class="project-bullets">
+          <li>YOLO11m fruit detector tuned for small, distant fruit (imgsz 1280) on merged Roboflow datasets, trained on
+            an RTX A5000</li>
+          <li>Dedicated single-class leaf detector to suppress false positives from dense foliage read as unripe fruit
+          </li>
+          <li>Ripeness call moved from a hand-tuned HSV heuristic to a trained YOLO classifier for more reliable results
+          </li>
+          <li>Iterated through multiple dataset sources and self-labeled video frames to close the
+            training-to-real-footage gap</li>
+        </ul>
+        <div class="project-tech">
+          <span class="tech-tag">YOLO11</span>
+          <span class="tech-tag">PyTorch</span>
+          <span class="tech-tag">OpenCV</span>
+          <span class="tech-tag">Agritech</span>
+          <span class="tech-tag">Computer Vision</span>
         </div>
-        <div class="proj-desc-col">Built an AI vision system for the UR5 robotic arm with Forward & Inverse Kinematics for accurate end-effector positioning. Physics-accurate digital twin in NVIDIA Omniverse for motion validation and safety verification before physical deployment.</div>
-        <div class="proj-tags-col">
-          <span class="proj-tag">NVIDIA Omniverse</span>
-          <span class="proj-tag">Isaac Sim</span>
-          <span class="proj-tag">FK / IK</span>
-        </div>
-      </a>
-
-      <a class="proj-row" href="https://github.com/hadal-magdy/Smart-Supermarket-" target="_blank">
-        <div class="proj-github-hint">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 013.01-.4c1.02 0 2.05.14 3.01.4 2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
-          View on GitHub →
-        </div>
-        <div class="proj-index">04</div>
-        <div class="proj-info">
-          <div class="proj-category-label">IoT · Smart Automation</div>
-          <div class="proj-name">Smart Shop — IoT System</div>
-        </div>
-        <div class="proj-desc-col">Built an IoT-based smart supermarket system using ESP32 and MicroPython. Implemented automated lighting, door control, touch-less tap, temperature-based fan control, and fire/security alarm systems — all networked and remotely monitored.</div>
-        <div class="proj-tags-col">
-          <span class="proj-tag">ESP32</span>
-          <span class="proj-tag">MicroPython</span>
-          <span class="proj-tag">IoT</span>
-        </div>
-      </a>
-
-      <a class="proj-row" href="https://drive.google.com/drive/folders/1Xmh9llfp52mB3BejjiXcupf1J7qobg2o?sort=13%26direction=a" target="_blank">
-        <div class="proj-github-hint">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 013.01-.4c1.02 0 2.05.14 3.01.4 2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
-          View on GitHub →
-        </div>
-        <div class="proj-index">05</div>
-        <div class="proj-info">
-          <div class="proj-category-label">IoT · Digital Twin · MQTT</div>
-          <div class="proj-name">Digital Twin Monitoring & Control — Greenhouse</div>
-        </div>
-        <div class="proj-desc-col">Designed a complete greenhouse monitoring and control system using Digital Twin architecture. Used ESP32 for sensor data acquisition and Raspberry Pi as a central gateway. Implemented MQTT communication with real-time visualization and remote control features.</div>
-        <div class="proj-tags-col">
-          <span class="proj-tag">ESP32</span>
-          <span class="proj-tag">Raspberry Pi</span>
-          <span class="proj-tag">MQTT</span>
-        </div>
-      </a>
-
-      <a class="proj-row" href="https://drive.google.com/drive/folders/1IYG-wZ_wvRE2gRaPTytqCjE507-EFOvB?sort=13%26direction=a" target="_blank">
-        <div class="proj-github-hint">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 013.01-.4c1.02 0 2.05.14 3.01.4 2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
-          View on GitHub →
-        </div>
-        <div class="proj-index">06</div>
-        <div class="proj-info">
-          <div class="proj-category-label">Arduino · Low-Level Control</div>
-          <div class="proj-name">Line Follower, Remote Control Car with Ultrasonic</div>
-        </div>
-        <div class="proj-desc-col">Designed and implemented  using Arduino microcontroller in C — demonstrating full hardware-software integration.</div>
-        <div class="proj-tags-col">
-          <span class="proj-tag">C </span>
-          <span class="proj-tag">Arduino</span>
-          <span class="proj-tag">real hardware</span>
-        </div>
-      </a>
-
-      <a class="proj-row" href="https://github.com/hadal-magdy/Digital_Clock/tree/master" target="_blank">
-        <div class="proj-github-hint">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 013.01-.4c1.02 0 2.05.14 3.01.4 2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
-          View on GitHub →
-        </div>
-        <div class="proj-index">07</div>
-        <div class="proj-info">
-          <div class="proj-category-label">Embedded Systems · Low-Level Control</div>
-          <div class="proj-name">Mini projects (Traffic Light & Digital Clock & Heart Rate System)</div>
-        </div>
-        <div class="proj-desc-col">Designed and implemented traffic light management, digital clock systems, and heart rate pulse monitoring using AVR and PIC18 microcontrollers in C — demonstrating full hardware-software integration from bare-metal firmware.</div>
-        <div class="proj-tags-col">
-          <span class="proj-tag">C </span>
-          <span class="proj-tag">AVR / PIC18</span>
-          <span class="proj-tag">Proteus</span>
-        </div>
-      </a>
-
+        <a href="https://drive.google.com/drive/folders/19__B2N2_9i3NWG7GH96m3PzzKBon1Utp" class="project-link"
+          target="_blank">
+          &#10141; View
+        </a>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ═══ EDUCATION ═══ -->
-<section id="education">
-  <div class="section-wrap alt">
-    <div class="eyebrow reveal">Academic Background</div>
-    <h2 class="section-title reveal">Education &<br><em>Foundation</em></h2>
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-label">003 — Experience</div>
+    <h2 class="section-title">Career Timeline</h2>
+    <div class="timeline">
 
-    <div class="edu-layout reveal">
-      <!-- Main degree card -->
-      <div class="edu-main-card">
-        <div class="edu-degree-label">Bachelor of Science · 2019 — 2024</div>
-        <div class="edu-degree-name">Computer<br>Science</div>
-        <div class="edu-university">Mansoura University</div>
-        <div class="edu-location">Mansoura, Egypt</div>
-        <ul class="edu-bullets">
-          <li>Graduated with a degree in <strong>Computer Science</strong> — building the theoretical foundation underpinning all professional work in automation, simulation, and embedded systems.</li>
-          <li>Pursued self-directed specialization in <strong>industrial automation, IoT, and digital twin technologies</strong> throughout the program, earning four external certifications during studies.</li>
-          <li>Applied coursework through <strong>hands-on personal projects</strong>, including a ChatBot developed with Dialogflow as part of the Acatance Application capstone.</li>
+      <div class="timeline-item fade-in">
+        <div class="timeline-date">Freelance</div>
+        <div class="timeline-role">Computer Vision Developer</div>
+        <div class="timeline-company">Independent — Agricultural Clients</div>
+        <ul class="timeline-bullets">
+          <li>Built end-to-end computer vision solutions for agricultural clients, alongside 4DT.io work</li>
         </ul>
       </div>
 
-      <!-- Side cards: certifications summary -->
-      <div class="edu-side">
-        <div class="edu-side-card">
-          <div class="edu-side-label">NVIDIA</div>
-          <div class="edu-side-title">Deep Learning Certification</div>
-          <div class="edu-side-sub">Neural network design, GPU-accelerated AI model training, and production deployment fundamentals.</div>
-          <div class="edu-side-date">Verified ✓</div>
-        </div>
-        <div class="edu-side-card">
-          <div class="edu-side-label">Siemens</div>
-          <div class="edu-side-title">TIA Portal PLC Certification (S7-1513)</div>
-          <div class="edu-side-sub">Programming and commissioning Siemens S7-1500 PLCs — ladder/FBD logic and industrial automation workflows.</div>
-          <div class="edu-side-date">Verified ✓</div>
-        </div>
-        <div class="edu-side-card">
-          <div class="edu-side-label">NTI Egypt</div>
-          <div class="edu-side-title">Digital Twin — Hire Ready Track</div>
-          <div class="edu-side-sub">End-to-end digital twin engineering: design, data integration, simulation, and industrial deployment.</div>
-          <div class="edu-side-date">Verified ✓</div>
-        </div>
-        <div class="edu-side-card">
-          <div class="edu-side-label">NTI Egypt</div>
-          <div class="edu-side-title">Embedded C & AVR Microcontroller</div>
-          <div class="edu-side-sub">Low-level C programming, AVR architecture, peripheral interfacing, and real-time embedded systems design.</div>
-          <div class="edu-side-date">Verified ✓</div>
-        </div>
+      <div class="timeline-item fade-in">
+        <div class="timeline-date">Apr 2026 — Present</div>
+        <div class="timeline-role">Digital Twin Engineer</div>
+        <div class="timeline-company">4DT.io</div>
+        <ul class="timeline-bullets">
+          <li>Implemented spatial data pipelines and computer vision tasks bridging physical assets with digital twin
+            environments</li>
+          <li>Optimized automated data extraction workflows for Agricultural Technology clients</li>
+          <li>Contributed to the design and deployment of end-to-end CV + digital twin systems in production</li>
+        </ul>
       </div>
+
+      <div class="timeline-item fade-in">
+        <div class="timeline-date">Jan 2026 — Apr 2026</div>
+        <div class="timeline-role">Digital Twin Intern</div>
+        <div class="timeline-company">Industry 4.0 Center of Excellence</div>
+        <ul class="timeline-bullets">
+          <li>Implemented Hardware-in-the-Loop (HIL) robotic simulations in NVIDIA Omniverse / Isaac Sim</li>
+          <li>Validated control logic in simulation before physical deployment, reducing hardware risk</li>
+          <li>Built an AI vision system for the UR5e robotic arm and implemented FK & IK for accurate end-effector
+            positioning</li>
+        </ul>
+      </div>
+
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ═══ CERTIFICATIONS ═══ -->
-<section id="certs">
-  <div class="section-wrap">
-    <div class="eyebrow reveal">Verified Credentials</div>
-    <h2 class="section-title reveal">Certifications &<br><em>Credentials</em></h2>
-
-    <div class="certs-grid reveal">
-      <div class="cert-card">
-        <div class="cert-seal">🟢</div>
-        <div class="cert-body">
+  <!-- CERTIFICATIONS -->
+  <section id="certs">
+    <div class="section-label">004 — Certifications</div>
+    <h2 class="section-title">Credentials</h2>
+    <div class="certs-grid">
+      <div class="cert-card fade-in">
+        <div class="cert-icon">🧠</div>
+        <div>
+          <div class="cert-name">NVIDIA Deep Learning Certification</div>
           <div class="cert-issuer">NVIDIA</div>
-          <div class="cert-name">Deep Learning Certification</div>
-          <div style="font-size:13px;color:var(--text2);margin-top:6px;">Fundamentals of deep learning, neural network design, and GPU-accelerated AI model training for production environments.</div>
-          <span class="cert-status">Verified ✓</span>
         </div>
       </div>
-      <div class="cert-card">
-        <div class="cert-seal">🔵</div>
-        <div class="cert-body">
-          <div class="cert-issuer">Siemens</div>
+      <div class="cert-card fade-in">
+        <div class="cert-icon">⚙️</div>
+        <div>
           <div class="cert-name">TIA Portal PLC Certification (S7-1513)</div>
-          <div style="font-size:13px;color:var(--text2);margin-top:6px;">Programming and commissioning Siemens S7-1500 PLCs, ladder/FBD logic, and industrial automation workflows in TIA Portal.</div>
-          <span class="cert-status">Verified ✓</span>
+          <div class="cert-issuer">Siemens</div>
         </div>
       </div>
-      <div class="cert-card">
-        <div class="cert-seal">🟡</div>
-        <div class="cert-body">
-          <div class="cert-issuer">NTI Egypt</div>
-          <div class="cert-name">Digital Twin — Hire Ready Track</div>
-          <div style="font-size:13px;color:var(--text2);margin-top:6px;">End-to-end digital twin engineering program covering design, data integration, simulation, and industrial deployment workflows.</div>
-          <span class="cert-status">Verified ✓</span>
-        </div>
-      </div>
-      <div class="cert-card">
-        <div class="cert-seal">🟠</div>
-        <div class="cert-body">
-          <div class="cert-issuer">NTI Egypt</div>
+      <div class="cert-card fade-in">
+        <div class="cert-icon">💾</div>
+        <div>
           <div class="cert-name">Embedded C & AVR Microcontroller</div>
-          <div style="font-size:13px;color:var(--text2);margin-top:6px;">Low-level C programming, AVR architecture, peripheral interfacing, and real-time embedded systems design principles.</div>
-          <span class="cert-status">Verified ✓</span>
+          <div class="cert-issuer">NTI</div>
+        </div>
+      </div>
+      <div class="cert-card fade-in">
+        <div class="cert-icon">🔮</div>
+        <div>
+          <div class="cert-name">Digital Twin — Hire Ready Track</div>
+          <div class="cert-issuer">NTI</div>
+        </div>
+      </div>
+      <div class="cert-card fade-in">
+        <div class="cert-icon">🎯</div>
+        <div>
+          <div class="cert-name">HCIA-AI</div>
+          <div class="cert-issuer">Huawei</div>
+        </div>
+      </div>
+      <div class="cert-card fade-in">
+        <div class="cert-icon">☁️</div>
+        <div>
+          <div class="cert-name">Huawei Cloud AI</div>
+          <div class="cert-issuer">NTI</div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ═══ CONTACT ═══ -->
-<section id="contact">
-  <div class="section-wrap alt">
-    <div class="contact-layout">
-      <div class="contact-left">
-        <div class="eyebrow reveal">Get In Touch</div>
-        <h2 class="contact-lead reveal">
-          Let's build something<br><em>remarkable</em> together.
-        </h2>
-        <p class="contact-blurb reveal">
-          I'm actively seeking roles in Digital Twin engineering, Industrial Automation, IoT, and Industry 4.0. Whether you're working on smart infrastructure, robotics, energy systems, or connected manufacturing — I'd love to hear from you.
-        </p>
-        <div class="contact-row reveal">
-          <a class="contact-item" href="mailto:hadalprofessional@gmail.com">
-            <div class="contact-item-icon">✉</div>
-            <div>
-              <div class="contact-item-label">Email</div>
-              <div class="contact-item-val">hadalprofessional@gmail.com</div>
-            </div>
-          </a>
-          <a class="contact-item" href="tel:+201558239225">
-            <div class="contact-item-icon">📞</div>
-            <div>
-              <div class="contact-item-label">Phone</div>
-              <div class="contact-item-val">+20 155 823 9225</div>
-            </div>
-          </a>
-          <a class="contact-item" href="https://www.linkedin.com/in/hadal-magdy" target="_blank">
-            <div class="contact-item-icon">in</div>
-            <div>
-              <div class="contact-item-label">LinkedIn</div>
-              <div class="contact-item-val">linkedin.com/in/hadal-magdy</div>
-            </div>
-          </a>
-          <a class="contact-item" href="https://github.com/hadal-magdy" target="_blank">
-            <div class="contact-item-icon">⌥</div>
-            <div>
-              <div class="contact-item-label">GitHub</div>
-              <div class="contact-item-val">github.com/hadal-magdy</div>
-            </div>
-          </a>
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-label">005 — Contact</div>
+    <h2 class="section-title">Let's Build Something</h2>
+    <p class="contact-subtitle">
+      Open to computer vision projects, digital twin collaborations, and research partnerships.
+    </p>
+    <div class="contact-links">
+      <a href="mailto:hadalprofessional@gmail.com" class="contact-card">
+        <span class="contact-card-icon">✉️</span>
+        <div>
+          <span class="contact-card-label">Email</span>
+          <span class="contact-card-val">hadalprofessional@gmail.com</span>
         </div>
-      </div>
-
-      <div class="otw-card reveal">
-        <div class="otw-badge">Open to Opportunities</div>
-        <div class="otw-title">Hadal Magdy<br>Ahmed Ibrahim</div>
-        <div class="otw-role">Digital Twin · Automation · IoT · AI</div>
-        <div class="otw-tags">
-          <span class="otw-tag">Digital Twin</span>
-          <span class="otw-tag">Industry 4.0</span>
-          <span class="otw-tag">OPC UA / MQTT</span>
-          <span class="otw-tag">Siemens PLC</span>
-          <span class="otw-tag">NVIDIA Omniverse</span>
-          <span class="otw-tag">IEC 61850</span>
-          <span class="otw-tag">SCADA / HMI</span>
-          <span class="otw-tag">IoT / Embedded</span>
-          <span class="otw-tag">Deep Learning</span>
-          <span class="otw-tag">AR Visualization</span>
+      </a>
+      <a href="https://linkedin.com/in/hadal-magdy" class="contact-card" target="_blank">
+        <span class="contact-card-icon">💼</span>
+        <div>
+          <span class="contact-card-label">LinkedIn</span>
+          <span class="contact-card-val">hadal-magdy</span>
         </div>
-        <a class="otw-cta" href="mailto:hadalprofessional@gmail.com">Send an Opportunity →</a>
-      </div>
+      </a>
+      <a href="https://github.com/hadal-magdy" class="contact-card" target="_blank">
+        <span class="contact-card-icon">🐙</span>
+        <div>
+          <span class="contact-card-label">GitHub</span>
+          <span class="contact-card-val">hadal-magdy</span>
+        </div>
+      </a>
+      <a href="https://hadal-magdy.github.io" class="contact-card" target="_blank">
+        <span class="contact-card-icon">🌐</span>
+        <div>
+          <span class="contact-card-label">Portfolio</span>
+          <span class="contact-card-val">hadal-magdy.github.io</span>
+        </div>
+      </a>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ═══ FOOTER ═══ -->
-<footer>
-  <span class="footer-left">Hadal Magdy</span>
-  <span class="footer-right">© 2026 · B.Sc. Computer Science · Mansoura University · 6th October, Giza, Egypt</span>
-</footer>
+  <footer>
+    © 2026 Hadal Magdy &nbsp;·&nbsp; Computer Vision Engineer &nbsp;·&nbsp; Giza, Egypt
+  </footer>
 
-<script>
-// ── Scroll reveal ──
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach((e) => {
-    if (e.isIntersecting) {
-      const delay = e.target.dataset.delay || 0;
-      setTimeout(() => e.target.classList.add('up'), delay);
-    }
-  });
-}, { threshold: 0.12 });
-
-document.querySelectorAll('.reveal, .reveal-left').forEach(el => revealObserver.observe(el));
-
-// ── Stagger reveal ──
-const staggerObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      Array.from(entry.target.children).forEach((child, i) => {
-        setTimeout(() => {
-          child.style.opacity = '1';
-          child.style.transform = 'none';
-        }, i * 100);
+  <script>
+    // Scroll-triggered fade-in
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, 100);
+          observer.unobserve(entry.target);
+        }
       });
-      entry.target.classList.add('up');
-    }
-  });
-}, { threshold: 0.1 });
+    }, { threshold: 0.08 });
 
-document.querySelectorAll('[data-stagger]').forEach(el => staggerObserver.observe(el));
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-// ── Experience tabs ──
-function switchExp(index, el) {
-  document.querySelectorAll('.exp-tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.exp-panel').forEach(p => p.classList.remove('active'));
-  el.classList.add('active');
-  document.getElementById('exp-' + index).classList.add('active');
-}
+    // Nav active state
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
 
-// ── Active nav on scroll ──
-const sections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('.nav-links a');
-window.addEventListener('scroll', () => {
-  let current = '';
-  sections.forEach(s => {
-    if (window.scrollY >= s.offsetTop - 80) current = s.id;
-  });
-  navLinks.forEach(a => {
-    a.style.color = a.getAttribute('href') === '#' + current ? 'var(--gold)' : '';
-  });
-}, { passive: true });
-</script>
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(sec => {
+        if (window.scrollY >= sec.offsetTop - 120) current = sec.id;
+      });
+      navLinks.forEach(link => {
+        link.style.color = link.getAttribute('href') === '#' + current
+          ? 'var(--cyan)' : '';
+      });
+    });
+  </script>
 </body>
+
 </html>
