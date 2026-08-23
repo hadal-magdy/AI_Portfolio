@@ -506,7 +506,7 @@
 
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 24px;
     }
 
@@ -545,7 +545,6 @@
     }
 
     .project-card.featured {
-      grid-column: span 2;
       background: linear-gradient(135deg, #0e1a28 0%, #0a1825 100%);
       border-color: rgba(0, 229, 255, 0.2);
     }
@@ -988,8 +987,8 @@
         gap: 40px;
       }
 
-      .project-card.featured {
-        grid-column: span 1;
+      .projects-grid {
+        grid-template-columns: 1fr;
       }
 
       .project-card-inner {
@@ -1330,9 +1329,8 @@
           &#10141; View
         </a>
       </div>
-    </div>
 
-          <!-- UR5e Digital Twin -->
+      <!-- Project 06 -->
       <div class="project-card fade-in">
         <div class="project-num">
           <span>06</span>
@@ -1361,7 +1359,7 @@
           &#10141; View
         </a>
       </div>
-    
+    </div>
   </section>
 
   <!-- EXPERIENCE -->
